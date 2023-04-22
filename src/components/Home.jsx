@@ -2,6 +2,7 @@ import { Component } from "react";
 import Connection from "./Connection";
 import Teleoperation from "./Teleoperation";
 import RobotState from "./RobotState";
+import Map from "./Map";
 import {
     Row,
     Col,
@@ -26,14 +27,15 @@ class Home extends Component {
                         <Col>
                             <Teleoperation />
                         </Col>
-                        <Col>
-                            <h1>MAP</h1>
-                            <p>This region will be used for displaying a map</p>
-                        </Col>
                     </Row>
                     <Row>
+                        {" "}
                         <Col>
                             <RobotState />
+                        </Col>
+                        <Col>
+                            <h1>MAP</h1>
+                            <Map />
                         </Col>
                     </Row>
                 </Container>

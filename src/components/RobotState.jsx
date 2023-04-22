@@ -28,12 +28,12 @@ class RobotState extends Component {
         console.log(this.state.ros);
 
         this.state.ros.on("connection", () => {
-            console.log("connection established from Teleoperation Component!");
+            console.log("connection established from RobotState Component!");
             this.setState({ connected: true });
         });
 
         this.state.ros.on("close", () => {
-            console.log("connection is closed from Teleoperation Component!");
+            console.log("connection is closed from RobotState Component!");
             this.setState({ connected: false });
             setTimeout(() => {
                 try {
