@@ -2704,13 +2704,9 @@
         /**
          * If you use roslib in a browser, all the classes will be exported to a global variable called ROSLIB.
          *
-         * If you use nodejs, this is the variable you get when you require('roslib').
+         * If you use nodejs, this is the variable you get when you require('roslib')
          */
         var ROSLIB = this.ROSLIB || {
-            /**
-             * @default
-             * @description Library version
-             */
             REVISION: '1.3.0'
         };
 
@@ -2749,20 +2745,17 @@
          * An actionlib action client.
          *
          * Emits the following events:
-         *  * 'timeout' - If a timeout occurred while sending a goal.
-         *  * 'status' - The status messages received from the action server.
-         *  * 'feedback' - The feedback messages received from the action server.
-         *  * 'result' - The result returned from the action server.
+         *  * 'timeout' - if a timeout occurred while sending a goal
+         *  * 'status' - the status messages received from the action server
+         *  * 'feedback' -  the feedback messages received from the action server
+         *  * 'result' - the result returned from the action server
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.serverName - The action server name, like '/fibonacci'.
-         * @param {string} options.actionName - The action message name, like 'actionlib_tutorials/FibonacciAction'.
-         * @param {number} [options.timeout] - The timeout length when connecting to the action server.
-         * @param {boolean} [options.omitFeedback] - The flag to indicate whether to omit the feedback channel or not.
-         * @param {boolean} [options.omitStatus] - The flag to indicate whether to omit the status channel or not.
-         * @param {boolean} [options.omitResult] - The flag to indicate whether to omit the result channel or not.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * serverName - the action server name, like /fibonacci
+         *   * actionName - the action message name, like 'actionlib_tutorials/FibonacciAction'
+         *   * timeout - the timeout length when connecting to the action server
          */
         function ActionClient(options) {
             var that = this;
@@ -2895,18 +2888,18 @@
         var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
         /**
-         * An actionlib action listener.
+         * An actionlib action listener
          *
          * Emits the following events:
-         *  * 'status' - The status messages received from the action server.
-         *  * 'feedback' - The feedback messages received from the action server.
-         *  * 'result' - The result returned from the action server.
+         *  * 'status' - the status messages received from the action server
+         *  * 'feedback' -  the feedback messages received from the action server
+         *  * 'result' - the result returned from the action server
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.serverName - The action server name, like '/fibonacci'.
-         * @param {string} options.actionName - The action message name, like 'actionlib_tutorials/FibonacciAction'.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * serverName - the action server name, like /fibonacci
+         *   * actionName - the action message name, like 'actionlib_tutorials/FibonacciAction'
          */
         function ActionListener(options) {
             var that = this;
@@ -2914,6 +2907,10 @@
             this.ros = options.ros;
             this.serverName = options.serverName;
             this.actionName = options.actionName;
+            this.timeout = options.timeout;
+            this.omitFeedback = options.omitFeedback;
+            this.omitStatus = options.omitStatus;
+            this.omitResult = options.omitResult;
 
 
             // create the topics associated with actionlib
@@ -2978,15 +2975,15 @@
         var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
         /**
-         * An actionlib goal that is associated with an action server.
+         * An actionlib goal goal is associated with an action server.
          *
          * Emits the following events:
-         *  * 'timeout' - If a timeout occurred while sending a goal.
+         *  * 'timeout' - if a timeout occurred while sending a goal
          *
-         * @constructor
-         * @param {Object} options
-         * @param {ActionClient} options.actionClient - The ROSLIB.ActionClient to use with this goal.
-         * @param {Object} options.goalMessage - The JSON object containing the goal for the action server.
+         *  @constructor
+         *  @param object with following keys:
+         *   * actionClient - the ROSLIB.ActionClient to use with this goal
+         *   * goalMessage - The JSON object containing the goal for the action server
          */
         function Goal(options) {
             var that = this;
@@ -3033,7 +3030,7 @@
         /**
          * Send the goal to the action server.
          *
-         * @param {number} [timeout] - A timeout length for the goal's result.
+         * @param timeout (optional) - a timeout length for the goal's result
          */
         Goal.prototype.send = function (timeout) {
             var that = this;
@@ -3058,7 +3055,6 @@
         };
 
         module.exports = Goal;
-
     }, { "../core/Message": 15, "eventemitter2": 2 }], 13: [function (require, module, exports) {
         /**
          * @fileOverview
@@ -3073,15 +3069,16 @@
          * An actionlib action server client.
          *
          * Emits the following events:
-         *  * 'goal' - Goal sent by action client.
-         *  * 'cancel' - Action client has canceled the request.
+         *  * 'goal' - goal sent by action client
+         *  * 'cancel' - action client has canceled the request
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.serverName - The action server name, like '/fibonacci'.
-         * @param {string} options.actionName - The action message name, like 'actionlib_tutorials/FibonacciAction'.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * serverName - the action server name, like /fibonacci
+         *   * actionName - the action message name, like 'actionlib_tutorials/FibonacciAction'
          */
+
         function SimpleActionServer(options) {
             var that = this;
             options = options || {};
@@ -3150,7 +3147,7 @@
                 }
             });
 
-            // helper function to determine ordering of timestamps
+            // helper function for determing ordering of timestamps
             // returns t1 < t2
             var isEarlier = function (t1, t2) {
                 if (t1.secs > t2.secs) {
@@ -3189,6 +3186,7 @@
                     }
                     if (that.currentGoal && isEarlier(that.currentGoal.goal_id.stamp,
                         cancelMessage.stamp)) {
+
                         that.emit('cancel');
                     }
                 }
@@ -3209,14 +3207,15 @@
         SimpleActionServer.prototype.__proto__ = EventEmitter2.prototype;
 
         /**
-         * Set action state to succeeded and return to client.
-         *
-         * @param {Object} result - The result to return to the client.
-         */
-        SimpleActionServer.prototype.setSucceeded = function (result) {
+        *  Set action state to succeeded and return to client
+        */
+
+        SimpleActionServer.prototype.setSucceeded = function (result2) {
+
+
             var resultMessage = new Message({
                 status: { goal_id: this.currentGoal.goal_id, status: 3 },
-                result: result
+                result: result2
             });
             this.resultPublisher.publish(resultMessage);
 
@@ -3231,14 +3230,13 @@
         };
 
         /**
-         * Set action state to aborted and return to client.
-         *
-         * @param {Object} result - The result to return to the client.
-         */
-        SimpleActionServer.prototype.setAborted = function (result) {
+        *  Set action state to aborted and return to client
+        */
+
+        SimpleActionServer.prototype.setAborted = function (result2) {
             var resultMessage = new Message({
                 status: { goal_id: this.currentGoal.goal_id, status: 4 },
-                result: result
+                result: result2
             });
             this.resultPublisher.publish(resultMessage);
 
@@ -3253,22 +3251,24 @@
         };
 
         /**
-         * Send a feedback message.
-         *
-         * @param {Object} feedback - The feedback to send to the client.
-         */
-        SimpleActionServer.prototype.sendFeedback = function (feedback) {
+        *  Function to send feedback
+        */
+
+        SimpleActionServer.prototype.sendFeedback = function (feedback2) {
+
             var feedbackMessage = new Message({
                 status: { goal_id: this.currentGoal.goal_id, status: 1 },
-                feedback: feedback
+                feedback: feedback2
             });
             this.feedbackPublisher.publish(feedbackMessage);
         };
 
         /**
-         * Handle case where client requests preemption.
-         */
+        *  Handle case where client requests preemption
+        */
+
         SimpleActionServer.prototype.setPreempted = function () {
+
             this.statusMessage.status_list = [];
             var resultMessage = new Message({
                 status: { goal_id: this.currentGoal.goal_id, status: 2 },
@@ -3285,7 +3285,6 @@
         };
 
         module.exports = SimpleActionServer;
-
     }, { "../core/Message": 15, "../core/Topic": 22, "eventemitter2": 2 }], 14: [function (require, module, exports) {
         var Ros = require('../core/Ros');
         var mixin = require('../mixin');
@@ -3301,7 +3300,7 @@
 
     }, { "../core/Ros": 17, "../mixin": 29, "./ActionClient": 10, "./ActionListener": 11, "./Goal": 12, "./SimpleActionServer": 13 }], 15: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - baalexander@gmail.com
          */
 
@@ -3311,7 +3310,7 @@
          * Message objects are used for publishing and subscribing to and from topics.
          *
          * @constructor
-         * @param {Object} values - An object matching the fields defined in the .msg definition file.
+         * @param values - object matching the fields defined in the .msg definition file
          */
         function Message(values) {
             assign(this, values);
@@ -3320,7 +3319,7 @@
         module.exports = Message;
     }, { "object-assign": 3 }], 16: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - baalexander@gmail.com
          */
 
@@ -3331,9 +3330,9 @@
          * A ROS parameter.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.name - The param name, like max_vel_x.
+         * @param options - possible keys include:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * name - the param name, like max_vel_x
          */
         function Param(options) {
             options = options || {};
@@ -3342,10 +3341,10 @@
         }
 
         /**
-         * Fetch the value of the param.
+         * Fetches the value of the param.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.value - The value of the param from ROS.
+         * @param callback - function with the following params:
+         *  * value - the value of the param from ROS.
          */
         Param.prototype.get = function (callback) {
             var paramClient = new Service({
@@ -3365,10 +3364,9 @@
         };
 
         /**
-         * Set the value of the param in ROS.
+         * Sets the value of the param in ROS.
          *
-         * @param {Object} value - The value to set param to.
-         * @param {function} callback - The callback function.
+         * @param value - value to set param to.
          */
         Param.prototype.set = function (value, callback) {
             var paramClient = new Service({
@@ -3387,8 +3385,6 @@
 
         /**
          * Delete this parameter on the ROS server.
-         *
-         * @param {function} callback - The callback function.
          */
         Param.prototype.delete = function (callback) {
             var paramClient = new Service({
@@ -3405,10 +3401,9 @@
         };
 
         module.exports = Param;
-
     }, { "./Service": 18, "./ServiceRequest": 19 }], 17: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - baalexander@gmail.com
          */
 
@@ -3426,18 +3421,18 @@
          * Manages connection to the server and all interactions with ROS.
          *
          * Emits the following events:
-         *  * 'error' - There was an error with ROS.
-         *  * 'connection' - Connected to the WebSocket server.
-         *  * 'close' - Disconnected to the WebSocket server.
-         *  * &#60;topicName&#62; - A message came from rosbridge with the given topic name.
-         *  * &#60;serviceID&#62; - A service response came from rosbridge with the given ID.
+         *  * 'error' - there was an error with ROS
+         *  * 'connection' - connected to the WebSocket server
+         *  * 'close' - disconnected to the WebSocket server
+         *  * <topicName> - a message came from rosbridge with the given topic name
+         *  * <serviceID> - a service response came from rosbridge with the given ID
          *
          * @constructor
-         * @param {Object} options
-         * @param {string} [options.url] - The WebSocket URL for rosbridge or the node server URL to connect using socket.io (if socket.io exists in the page). Can be specified later with `connect`.
-         * @param {boolean} [options.groovyCompatibility=true] - Don't use interfaces that changed after the last groovy release or rosbridge_suite and related tools.
-         * @param {string} [options.transportLibrary=websocket] - One of 'websocket', 'workersocket', 'socket.io' or RTCPeerConnection instance controlling how the connection is created in `connect`.
-         * @param {Object} [options.transportOptions={}] - The options to use when creating a connection. Currently only used if `transportLibrary` is RTCPeerConnection.
+         * @param options - possible keys include: <br>
+         *   * url (optional) - (can be specified later with `connect`) the WebSocket URL for rosbridge or the node server url to connect using socket.io (if socket.io exists in the page) <br>
+         *   * groovyCompatibility - don't use interfaces that changed after the last groovy release or rosbridge_suite and related tools (defaults to true)
+         *   * transportLibrary (optional) - one of 'websocket', 'workersocket' (default), 'socket.io' or RTCPeerConnection instance controlling how the connection is created in `connect`.
+         *   * transportOptions (optional) - the options to use use when creating a connection. Currently only used if `transportLibrary` is RTCPeerConnection.
          */
         function Ros(options) {
             options = options || {};
@@ -3470,7 +3465,7 @@
         /**
          * Connect to the specified WebSocket.
          *
-         * @param {string} url - WebSocket URL or RTCDataChannel label for rosbridge.
+         * @param url - WebSocket URL or RTCDataChannel label for Rosbridge
          */
         Ros.prototype.connect = function (url) {
             if (this.transportLibrary === 'socket.io') {
@@ -3505,15 +3500,15 @@
         };
 
         /**
-         * Send an authorization request to the server.
+         * Sends an authorization request to the server.
          *
-         * @param {string} mac - MAC (hash) string given by the trusted source.
-         * @param {string} client - IP of the client.
-         * @param {string} dest - IP of the destination.
-         * @param {string} rand - Random string given by the trusted source.
-         * @param {Object} t - Time of the authorization request.
-         * @param {string} level - User level as a string given by the client.
-         * @param {Object} end - End time of the client's session.
+         * @param mac - MAC (hash) string given by the trusted source.
+         * @param client - IP of the client.
+         * @param dest - IP of the destination.
+         * @param rand - Random string given by the trusted source.
+         * @param t - Time of the authorization request.
+         * @param level - User level as a string given by the client.
+         * @param end - End time of the client's session.
          */
         Ros.prototype.authenticate = function (mac, client, dest, rand, t, level, end) {
             // create the request
@@ -3531,11 +3526,6 @@
             this.callOnConnection(auth);
         };
 
-        /**
-         * Send an encoded message over the WebSocket.
-         *
-         * @param {Object} messageEncoded - The encoded message to be sent.
-         */
         Ros.prototype.sendEncodedMessage = function (messageEncoded) {
             var emitter = null;
             var that = this;
@@ -3555,10 +3545,8 @@
         };
 
         /**
-         * Send the message over the WebSocket, but queue the message up if not yet
+         * Sends the message over the WebSocket, but queues the message up if not yet
          * connected.
-         *
-         * @param {Object} message - The message to be sent.
          */
         Ros.prototype.callOnConnection = function (message) {
             if (this.transportOptions.encoder) {
@@ -3569,10 +3557,10 @@
         };
 
         /**
-         * Send a set_level request to the server.
+         * Sends a set_level request to the server
          *
-         * @param {string} level - Status level (none, error, warning, info).
-         * @param {number} [id] - Operation ID to change status level on.
+         * @param level - Status level (none, error, warning, info)
+         * @param id - Optional: Operation ID to change status level on
          */
         Ros.prototype.setStatusLevel = function (level, id) {
             var levelMsg = {
@@ -3585,12 +3573,12 @@
         };
 
         /**
-         * Retrieve a list of action servers in ROS as an array of string.
+         * Retrieves Action Servers in ROS as an array of string
          *
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.actionservers - Array of action server names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback function with params:
+         *   * actionservers - Array of action server names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getActionServers = function (callback, failedCallback) {
             var getActionServers = new Service({
@@ -3617,14 +3605,13 @@
         };
 
         /**
-         * Retrieve a list of topics in ROS as an array.
+         * Retrieves list of topics in ROS as an array.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.result - The result object with the following params:
-         * @param {string[]} callback.result.topics - Array of topic names.
-         * @param {string[]} callback.result.types - Array of message type names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback function with params:
+         *   * topics - Array of topic names
+         *   * types - Array of message type names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getTopics = function (callback, failedCallback) {
             var topicsClient = new Service({
@@ -3651,13 +3638,13 @@
         };
 
         /**
-         * Retrieve a list of topics in ROS as an array of a specific type.
+         * Retrieves Topics in ROS as an array as specific type
          *
-         * @param {string} topicType - The topic type to find.
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.topics - Array of topic names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param topicType topic type to find
+         * @param callback function with params:
+         *   * topics - Array of topic names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getTopicsForType = function (topicType, callback, failedCallback) {
             var topicsForTypeClient = new Service({
@@ -3686,12 +3673,12 @@
         };
 
         /**
-         * Retrieve a list of active service names in ROS.
+         * Retrieves list of active service names in ROS.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.services - Array of service names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback - function with the following params:
+         *   * services - array of service names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getServices = function (callback, failedCallback) {
             var servicesClient = new Service({
@@ -3718,13 +3705,13 @@
         };
 
         /**
-         * Retrieve a list of services in ROS as an array as specific type.
+         * Retrieves list of services in ROS as an array as specific type
          *
-         * @param {string} serviceType - The service type to find.
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.topics - Array of service names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param serviceType service type to find
+         * @param callback function with params:
+         *   * topics - Array of service names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getServicesForType = function (serviceType, callback, failedCallback) {
             var servicesForTypeClient = new Service({
@@ -3753,14 +3740,13 @@
         };
 
         /**
-         * Retrieve the details of a ROS service request.
+         * Retrieves a detail of ROS service request.
          *
-         * @param {string} type - The type of the service.
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.result - The result object with the following params:
-         * @param {string[]} callback.result.typedefs - An array containing the details of the service request.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param service name of service:
+         * @param callback - function with params:
+         *   * type - String of the service type
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getServiceRequestDetails = function (type, callback, failedCallback) {
             var serviceTypeClient = new Service({
@@ -3789,14 +3775,13 @@
         };
 
         /**
-         * Retrieve the details of a ROS service response.
+         * Retrieves a detail of ROS service request.
          *
-         * @param {string} type - The type of the service.
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.result - The result object with the following params:
-         * @param {string[]} callback.result.typedefs - An array containing the details of the service response.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param service name of service
+         * @param callback - function with params:
+         *   * type - String of the service type
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getServiceResponseDetails = function (type, callback, failedCallback) {
             var serviceTypeClient = new Service({
@@ -3825,12 +3810,12 @@
         };
 
         /**
-         * Retrieve a list of active node names in ROS.
+         * Retrieves list of active node names in ROS.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.nodes - Array of node names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback - function with the following params:
+         *   * nodes - array of node names
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getNodes = function (callback, failedCallback) {
             var nodesClient = new Service({
@@ -3857,33 +3842,16 @@
         };
 
         /**
-         * Retrieve a list of subscribed topics, publishing topics and services of a specific node.
-         * <br>
-         * These are the parameters if failedCallback is <strong>defined</strong>.
-         *
-         * @param {string} node - Name of the node.
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.subscriptions - Array of subscribed topic names.
-         * @param {string[]} callback.publications - Array of published topic names.
-         * @param {string[]} callback.services - Array of service names hosted.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
-         *
-         * @also
-         *
-         * Retrieve a list of subscribed topics, publishing topics and services of a specific node.
-         * <br>
-         * These are the parameters if failedCallback is <strong>undefined</strong>.
-         *
-         * @param {string} node - Name of the node.
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.result - The result object with the following params:
-         * @param {string[]} callback.result.subscribing - Array of subscribed topic names.
-         * @param {string[]} callback.result.publishing - Array of published topic names.
-         * @param {string[]} callback.result.services - Array of service names hosted.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
-         */
+          * Retrieves list subscribed topics, publishing topics and services of a specific node
+          *
+          * @param node name of the node:
+          * @param callback - function with params:
+          *   * publications - array of published topic names
+          *   * subscriptions - array of subscribed topic names
+          *   * services - array of service names hosted
+          * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
+          */
         Ros.prototype.getNodeDetails = function (node, callback, failedCallback) {
             var nodesClient = new Service({
                 ros: this,
@@ -3911,12 +3879,12 @@
         };
 
         /**
-         * Retrieve a list of parameter names from the ROS Parameter Server.
+         * Retrieves list of param names from the ROS Parameter Server.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {string[]} callback.params - Array of param names.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback function with params:
+         *  * params - array of param names.
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getParams = function (callback, failedCallback) {
             var paramsClient = new Service({
@@ -3942,13 +3910,13 @@
         };
 
         /**
-         * Retrieve the type of a ROS topic.
+         * Retrieves a type of ROS topic.
          *
-         * @param {string} topic - Name of the topic.
-         * @param {function} callback - Function with the following params:
-         * @param {string} callback.type - The type of the topic.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param topic name of the topic:
+         * @param callback - function with params:
+         *   * type - String of the topic type
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getTopicType = function (topic, callback, failedCallback) {
             var topicTypeClient = new Service({
@@ -3977,13 +3945,13 @@
         };
 
         /**
-         * Retrieve the type of a ROS service.
+         * Retrieves a type of ROS service.
          *
-         * @param {string} service - Name of the service.
-         * @param {function} callback - Function with the following params:
-         * @param {string} callback.type - The type of the service.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param service name of service:
+         * @param callback - function with params:
+         *   * type - String of the service type
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getServiceType = function (service, callback, failedCallback) {
             var serviceTypeClient = new Service({
@@ -4012,13 +3980,13 @@
         };
 
         /**
-         * Retrieve the details of a ROS message.
+         * Retrieves a detail of ROS message.
          *
-         * @param {string} message - The name of the message type.
-         * @param {function} callback - Function with the following params:
-         * @param {string} callback.details - An array of the message details.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param message - String of a topic type
+         * @param callback - function with params:
+         *   * details - Array of the message detail
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Ros.prototype.getMessageDetails = function (message, callback, failedCallback) {
             var messageDetailClient = new Service({
@@ -4047,9 +4015,9 @@
         };
 
         /**
-         * Decode a typedef array into a dictionary like `rosmsg show foo/bar`.
+         * Decode a typedefs into a dictionary like `rosmsg show foo/bar`
          *
-         * @param {Object[]} defs - Array of type_def dictionary.
+         * @param defs - array of type_def dictionary
          */
         Ros.prototype.decodeTypeDefs = function (defs) {
             var that = this;
@@ -4098,15 +4066,15 @@
         };
 
         /**
-         * Retrieve a list of topics and their associated type definitions.
+         * Retrieves list of topics and their associated type definitions.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.result - The result object with the following params:
-         * @param {string[]} callback.result.topics - Array of topic names.
-         * @param {string[]} callback.result.types - Array of message type names.
-         * @param {string[]} callback.result.typedefs_full_text - Array of full definitions of message types, similar to `gendeps --cat`.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param callback function with params:
+         *   * topics - Array of topic names
+         *   * types - Array of message type names
+         *   * typedefs_full_text - Array of full definitions of message types, similar to `gendeps --cat`
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
+         *
          */
         Ros.prototype.getTopicsAndRawTypes = function (callback, failedCallback) {
             var topicsAndRawTypesClient = new Service({
@@ -4137,7 +4105,7 @@
 
     }, { "../util/workerSocket": 49, "./Service": 18, "./ServiceRequest": 19, "./SocketAdapter.js": 21, "eventemitter2": 2, "object-assign": 3, "ws": 46 }], 18: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - baalexander@gmail.com
          */
 
@@ -4149,10 +4117,10 @@
          * A ROS service client.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.name - The service name, like '/add_two_ints'.
-         * @param {string} options.serviceType - The service type, like 'rospy_tutorials/AddTwoInts'.
+         * @params options - possible keys include:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * name - the service name, like /add_two_ints
+         *   * serviceType - the service type, like 'rospy_tutorials/AddTwoInts'
          */
         function Service(options) {
             options = options || {};
@@ -4165,14 +4133,14 @@
         }
         Service.prototype.__proto__ = EventEmitter2.prototype;
         /**
-         * Call the service. Returns the service response in the
+         * Calls the service. Returns the service response in the
          * callback. Does nothing if this service is currently advertised.
          *
-         * @param {ServiceRequest} request - The ROSLIB.ServiceRequest to send.
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.response - The response from the service request.
-         * @param {function} [failedCallback] - The callback function when the service call failed with params:
-         * @param {string} failedCallback.error - The error message reported by ROS.
+         * @param request - the ROSLIB.ServiceRequest to send
+         * @param callback - function with params:
+         *   * response - the response from the service request
+         * @param failedCallback - the callback function when the service call failed (optional). Params:
+         *   * error - the error message reported by ROS
          */
         Service.prototype.callService = function (request, callback, failedCallback) {
             if (this.isAdvertised) {
@@ -4208,11 +4176,11 @@
          * into a server. The callback will be called with every request
          * that's made on this service.
          *
-         * @param {function} callback - This works similarly to the callback for a C++ service and should take the following params:
-         * @param {ServiceRequest} callback.request - The service request.
-         * @param {Object} callback.response - An empty dictionary. Take care not to overwrite this. Instead, only modify the values within.
-         *     It should return true if the service has finished successfully,
-         *     i.e., without any fatal errors.
+         * @param callback - This works similarly to the callback for a C++ service and should take the following params:
+         *   * request - the service request
+         *   * response - an empty dictionary. Take care not to overwrite this. Instead, only modify the values within.
+         *   It should return true if the service has finished successfully,
+         *   i.e. without any fatal errors.
          */
         Service.prototype.advertise = function (callback) {
             if (this.isAdvertised || typeof callback !== 'function') {
@@ -4262,7 +4230,7 @@
 
     }, { "./ServiceRequest": 19, "./ServiceResponse": 20, "eventemitter2": 2 }], 19: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - balexander@willowgarage.com
          */
 
@@ -4272,7 +4240,7 @@
          * A ServiceRequest is passed into the service call.
          *
          * @constructor
-         * @param {Object} values - Object matching the fields defined in the .srv definition file.
+         * @param values - object matching the fields defined in the .srv definition file
          */
         function ServiceRequest(values) {
             assign(this, values);
@@ -4281,7 +4249,7 @@
         module.exports = ServiceRequest;
     }, { "object-assign": 3 }], 20: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - balexander@willowgarage.com
          */
 
@@ -4291,7 +4259,7 @@
          * A ServiceResponse is returned from the service call.
          *
          * @constructor
-         * @param {Object} values - Object matching the fields defined in the .srv definition file.
+         * @param values - object matching the fields defined in the .srv definition file
          */
         function ServiceResponse(values) {
             assign(this, values);
@@ -4318,7 +4286,7 @@
         }
 
         /**
-         * Event listeners for a WebSocket or TCP socket to a JavaScript
+         * Events listeners for a WebSocket or TCP socket to a JavaScript
          * ROS Client. Sets up Messages for a given topic to trigger an
          * event on the ROS client.
          *
@@ -4326,6 +4294,7 @@
          * @private
          */
         function SocketAdapter(client) {
+
             var decoder = null;
             if (client.transportOptions.decoder) {
                 decoder = client.transportOptions.decoder;
@@ -4370,9 +4339,9 @@
 
             return {
                 /**
-                 * Emit a 'connection' event on WebSocket connection.
+                 * Emits a 'connection' event on WebSocket connection.
                  *
-                 * @param {function} event - The argument to emit with the event.
+                 * @param event - the argument to emit with the event.
                  * @memberof SocketAdapter
                  */
                 onopen: function onOpen(event) {
@@ -4381,9 +4350,9 @@
                 },
 
                 /**
-                 * Emit a 'close' event on WebSocket disconnection.
+                 * Emits a 'close' event on WebSocket disconnection.
                  *
-                 * @param {function} event - The argument to emit with the event.
+                 * @param event - the argument to emit with the event.
                  * @memberof SocketAdapter
                  */
                 onclose: function onClose(event) {
@@ -4392,9 +4361,9 @@
                 },
 
                 /**
-                 * Emit an 'error' event whenever there was an error.
+                 * Emits an 'error' event whenever there was an error.
                  *
-                 * @param {function} event - The argument to emit with the event.
+                 * @param event - the argument to emit with the event.
                  * @memberof SocketAdapter
                  */
                 onerror: function onError(event) {
@@ -4402,10 +4371,10 @@
                 },
 
                 /**
-                 * Parse message responses from rosbridge and send to the appropriate
+                 * Parses message responses from rosbridge and sends to the appropriate
                  * topic, service, or param.
                  *
-                 * @param {Object} data - The raw JSON message from rosbridge.
+                 * @param message - the raw JSON message from rosbridge.
                  * @memberof SocketAdapter
                  */
                 onmessage: function onMessage(data) {
@@ -4432,7 +4401,7 @@
 
     }, { "../util/cborTypedArrayTags": 44, "../util/decompressPng": 48, "cbor-js": 1 }], 22: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author Brandon Alexander - baalexander@gmail.com
          */
 
@@ -4443,20 +4412,20 @@
          * Publish and/or subscribe to a topic in ROS.
          *
          * Emits the following events:
-         *  * 'warning' - If there are any warning during the Topic creation.
-         *  * 'message' - The message data from rosbridge.
+         *  * 'warning' - if there are any warning during the Topic creation
+         *  * 'message' - the message data from rosbridge
          *
          * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} options.name - The topic name, like '/cmd_vel'.
-         * @param {string} options.messageType - The message type, like 'std_msgs/String'.
-         * @param {string} [options.compression=none] - The type of compression to use, like 'png', 'cbor', or 'cbor-raw'.
-         * @param {number} [options.throttle_rate=0] - The rate (in ms in between messages) at which to throttle the topics.
-         * @param {number} [options.queue_size=100] - The queue created at bridge side for re-publishing webtopics.
-         * @param {boolean} [options.latch=false] - Latch the topic when publishing.
-         * @param {number} [options.queue_length=0] - The queue length at bridge side used when subscribing.
-         * @param {boolean} [options.reconnect_on_close=true] - The flag to enable resubscription and readvertisement on close event.
+         * @param options - object with following keys:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * name - the topic name, like /cmd_vel
+         *   * messageType - the message type, like 'std_msgs/String'
+         *   * compression - the type of compression to use, like 'png', 'cbor', or 'cbor-raw'
+         *   * throttle_rate - the rate (in ms in between messages) at which to throttle the topics
+         *   * queue_size - the queue created at bridge side for re-publishing webtopics (defaults to 100)
+         *   * latch - latch the topic when publishing
+         *   * queue_length - the queue length at bridge side used when subscribing (defaults to 0, no queueing).
+         *   * reconnect_on_close - the flag to enable resubscription and readvertisement on close event(defaults to true).
          */
         function Topic(options) {
             options = options || {};
@@ -4518,8 +4487,8 @@
          * Every time a message is published for the given topic, the callback
          * will be called with the message object.
          *
-         * @param {function} callback - Function with the following params:
-         * @param {Object} callback.message - The published message.
+         * @param callback - function with the following params:
+         *   * message - the published message
          */
         Topic.prototype.subscribe = function (callback) {
             if (typeof callback === 'function') {
@@ -4542,13 +4511,13 @@
         };
 
         /**
-         * Unregister as a subscriber for the topic. Unsubscribing will stop
-         * and remove all subscribe callbacks. To remove a callback, you must
-         * explicitly pass the callback function in.
+         * Unregisters as a subscriber for the topic. Unsubscribing stop remove
+         * all subscribe callbacks. To remove a call back, you must explicitly
+         * pass the callback function in.
          *
-         * @param {function} [callback] - The callback to unregister, if
-         *     provided and other listeners are registered the topic won't
-         *     unsubscribe, just stop emitting to the passed listener.
+         * @param callback - the optional callback to unregister, if
+         *     * provided and other listeners are registered the topic won't
+         *     * unsubscribe, just stop emitting to the passed listener
          */
         Topic.prototype.unsubscribe = function (callback) {
             if (callback) {
@@ -4573,7 +4542,7 @@
 
 
         /**
-         * Register as a publisher for the topic.
+         * Registers as a publisher for the topic.
          */
         Topic.prototype.advertise = function () {
             if (this.isAdvertised) {
@@ -4599,7 +4568,7 @@
         };
 
         /**
-         * Unregister as a publisher for the topic.
+         * Unregisters as a publisher for the topic.
          */
         Topic.prototype.unadvertise = function () {
             if (!this.isAdvertised) {
@@ -4620,7 +4589,7 @@
         /**
          * Publish the message.
          *
-         * @param {Message} message - A ROSLIB.Message object.
+         * @param message - A ROSLIB.Message object.
          */
         Topic.prototype.publish = function (message) {
             if (!this.isAdvertised) {
@@ -4657,7 +4626,7 @@
 
     }, { "../mixin": 29, "./Message": 15, "./Param": 16, "./Ros": 17, "./Service": 18, "./ServiceRequest": 19, "./ServiceResponse": 20, "./Topic": 22 }], 24: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author David Gossow - dgossow@willowgarage.com
          */
 
@@ -4667,10 +4636,10 @@
         /**
          * A Pose in 3D space. Values are copied into this object.
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Vector3} options.position - The ROSLIB.Vector3 describing the position.
-         * @param {Quaternion} options.orientation - The ROSLIB.Quaternion describing the orientation.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * position - the Vector3 describing the position
+         *   * orientation - the ROSLIB.Quaternion describing the orientation
          */
         function Pose(options) {
             options = options || {};
@@ -4682,7 +4651,7 @@
         /**
          * Apply a transform against this pose.
          *
-         * @param {Transform} tf - The transform to be applied.
+         * @param tf the transform
          */
         Pose.prototype.applyTransform = function (tf) {
             this.position.multiplyQuaternion(tf.rotation);
@@ -4695,16 +4664,16 @@
         /**
          * Clone a copy of this pose.
          *
-         * @returns {Pose} The cloned pose.
+         * @returns the cloned pose
          */
         Pose.prototype.clone = function () {
             return new Pose(this);
         };
 
         /**
-         * Multiply this pose with another pose without altering this pose.
+         * Multiplies this pose with another pose without altering this pose.
          *
-         * @returns {Pose} The result of the multiplication.
+         * @returns Result of multiplication.
          */
         Pose.prototype.multiply = function (pose) {
             var p = pose.clone();
@@ -4713,9 +4682,9 @@
         };
 
         /**
-         * Compute the inverse of this pose.
+         * Computes the inverse of this pose.
          *
-         * @returns {Pose} The inverse of the pose.
+         * @returns Inverse of pose.
          */
         Pose.prototype.getInverse = function () {
             var inverse = this.clone();
@@ -4728,22 +4697,21 @@
         };
 
         module.exports = Pose;
-
     }, { "./Quaternion": 25, "./Vector3": 27 }], 25: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author David Gossow - dgossow@willowgarage.com
          */
 
         /**
          * A Quaternion.
          *
-         * @constructor
-         * @param {Object} options
-         * @param {number} [options.x=0] - The x value.
-         * @param {number} [options.y=0] - The y value.
-         * @param {number} [options.z=0] - The z value.
-         * @param {number} [options.w=1] - The w value.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * x - the x value
+         *   * y - the y value
+         *   * z - the z value
+         *   * w - the w value
          */
         function Quaternion(options) {
             options = options || {};
@@ -4799,7 +4767,7 @@
         /**
          * Set the values of this quaternion to the product of itself and the given quaternion.
          *
-         * @param {Quaternion} q - The quaternion to multiply with.
+         * @param q the quaternion to multiply with
          */
         Quaternion.prototype.multiply = function (q) {
             var newX = this.x * q.w + this.y * q.z - this.z * q.y + this.w * q.x;
@@ -4815,7 +4783,7 @@
         /**
          * Clone a copy of this quaternion.
          *
-         * @returns {Quaternion} The cloned quaternion.
+         * @returns the cloned quaternion
          */
         Quaternion.prototype.clone = function () {
             return new Quaternion(this);
@@ -4825,7 +4793,7 @@
 
     }, {}], 26: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author David Gossow - dgossow@willowgarage.com
          */
 
@@ -4835,10 +4803,10 @@
         /**
          * A Transform in 3-space. Values are copied into this object.
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Vector3} options.translation - The ROSLIB.Vector3 describing the translation.
-         * @param {Quaternion} options.rotation - The ROSLIB.Quaternion describing the rotation.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * translation - the Vector3 describing the translation
+         *   * rotation - the ROSLIB.Quaternion describing the rotation
          */
         function Transform(options) {
             options = options || {};
@@ -4850,28 +4818,27 @@
         /**
          * Clone a copy of this transform.
          *
-         * @returns {Transform} The cloned transform.
+         * @returns the cloned transform
          */
         Transform.prototype.clone = function () {
             return new Transform(this);
         };
 
         module.exports = Transform;
-
     }, { "./Quaternion": 25, "./Vector3": 27 }], 27: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author David Gossow - dgossow@willowgarage.com
          */
 
         /**
          * A 3D vector.
          *
-         * @constructor
-         * @param {Object} options
-         * @param {number} [options.x=0] - The x value.
-         * @param {number} [options.y=0] - The y value.
-         * @param {number} [options.z=0] - The z value.
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * x - the x value
+         *   * y - the y value
+         *   * z - the z value
          */
         function Vector3(options) {
             options = options || {};
@@ -4883,7 +4850,7 @@
         /**
          * Set the values of this vector to the sum of itself and the given vector.
          *
-         * @param {Vector3} v - The vector to add with.
+         * @param v the vector to add with
          */
         Vector3.prototype.add = function (v) {
             this.x += v.x;
@@ -4894,7 +4861,7 @@
         /**
          * Set the values of this vector to the difference of itself and the given vector.
          *
-         * @param {Vector3} v - The vector to subtract with.
+         * @param v the vector to subtract with
          */
         Vector3.prototype.subtract = function (v) {
             this.x -= v.x;
@@ -4905,7 +4872,7 @@
         /**
          * Multiply the given Quaternion with this vector.
          *
-         * @param {Quaternion} q - The quaternion to multiply with.
+         * @param q - the quaternion to multiply with
          */
         Vector3.prototype.multiplyQuaternion = function (q) {
             var ix = q.w * this.x + q.y * this.z - q.z * this.y;
@@ -4920,14 +4887,13 @@
         /**
          * Clone a copy of this vector.
          *
-         * @returns {Vector3} The cloned vector.
+         * @returns the cloned vector
          */
         Vector3.prototype.clone = function () {
             return new Vector3(this);
         };
 
         module.exports = Vector3;
-
     }, {}], 28: [function (require, module, exports) {
         module.exports = {
             Pose: require('./Pose'),
@@ -4957,7 +4923,7 @@
 
     }, {}], 30: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileoverview
          * @author David Gossow - dgossow@willowgarage.com
          */
 
@@ -4973,23 +4939,24 @@
         /**
          * A TF Client that listens to TFs from tf2_web_republisher.
          *
-         * @constructor
-         * @param {Object} options
-         * @param {Ros} options.ros - The ROSLIB.Ros connection handle.
-         * @param {string} [options.fixedFrame=base_link] - The fixed frame.
-         * @param {number} [options.angularThres=2.0] - The angular threshold for the TF republisher.
-         * @param {number} [options.transThres=0.01] - The translation threshold for the TF republisher.
-         * @param {number} [options.rate=10.0] - The rate for the TF republisher.
-         * @param {number} [options.updateDelay=50] - The time (in ms) to wait after a new subscription
-         *     to update the TF republisher's list of TFs.
-         * @param {number} [options.topicTimeout=2.0] - The timeout parameter for the TF republisher.
-         * @param {string} [options.serverName=/tf2_web_republisher] - The name of the tf2_web_republisher server.
-         * @param {string} [options.repubServiceName=/republish_tfs] - The name of the republish_tfs service (non groovy compatibility mode only).
+         *  @constructor
+         *  @param options - object with following keys:
+         *   * ros - the ROSLIB.Ros connection handle
+         *   * fixedFrame - the fixed frame, like /base_link
+         *   * angularThres - the angular threshold for the TF republisher
+         *   * transThres - the translation threshold for the TF republisher
+         *   * rate - the rate for the TF republisher
+         *   * updateDelay - the time (in ms) to wait after a new subscription
+         *                   to update the TF republisher's list of TFs
+         *   * topicTimeout - the timeout parameter for the TF republisher
+         *   * serverName (optional) - the name of the tf2_web_republisher server
+         *   * repubServiceName (optional) - the name of the republish_tfs service (non groovy compatibility mode only)
+         *   																 default: '/republish_tfs'
          */
         function TFClient(options) {
             options = options || {};
             this.ros = options.ros;
-            this.fixedFrame = options.fixedFrame || 'base_link';
+            this.fixedFrame = options.fixedFrame || '/base_link';
             this.angularThres = options.angularThres || 2.0;
             this.transThres = options.transThres || 0.01;
             this.rate = options.rate || 10.0;
@@ -5011,7 +4978,7 @@
             this._subscribeCB = null;
             this._isDisposed = false;
 
-            // Create an Action Client
+            // Create an Action client
             this.actionClient = new ActionClient({
                 ros: options.ros,
                 serverName: this.serverName,
@@ -5020,7 +4987,7 @@
                 omitResult: true
             });
 
-            // Create a Service Client
+            // Create a Service client
             this.serviceClient = new Service({
                 ros: options.ros,
                 name: this.repubServiceName,
@@ -5032,7 +4999,7 @@
          * Process the incoming TF message and send them out using the callback
          * functions.
          *
-         * @param {Object} tf - The TF message from the server.
+         * @param tf - the TF message from the server
          */
         TFClient.prototype.processTFArray = function (tf) {
             var that = this;
@@ -5096,9 +5063,9 @@
 
         /**
          * Process the service response and subscribe to the tf republisher
-         * topic.
+         * topic
          *
-         * @param {Object} response - The service response containing the topic name.
+         * @param response the service response containing the topic name
          */
         TFClient.prototype.processResponse = function (response) {
             // Do not setup a topic subscription if already disposed. Prevents a race condition where
@@ -5125,16 +5092,16 @@
         /**
          * Subscribe to the given TF frame.
          *
-         * @param {string} frameID - The TF frame to subscribe to.
-         * @param {function} callback - Function with the following params:
-         * @param {Transform} callback.transform - The transform data.
+         * @param frameID - the TF frame to subscribe to
+         * @param callback - function with params:
+         *   * transform - the transform data
          */
         TFClient.prototype.subscribe = function (frameID, callback) {
             // remove leading slash, if it's there
             if (frameID[0] === '/') {
                 frameID = frameID.substring(1);
             }
-            // if there is no callback registered for the given frame, create empty callback list
+            // if there is no callback registered for the given frame, create emtpy callback list
             if (!this.frameInfos[frameID]) {
                 this.frameInfos[frameID] = {
                     cbs: []
@@ -5144,7 +5111,7 @@
                     this.republisherUpdateRequested = true;
                 }
             }
-            // if we already have a transform, callback immediately
+            // if we already have a transform, call back immediately
             else if (this.frameInfos[frameID].transform) {
                 callback(this.frameInfos[frameID].transform);
             }
@@ -5154,8 +5121,8 @@
         /**
          * Unsubscribe from the given TF frame.
          *
-         * @param {string} frameID - The TF frame to unsubscribe from.
-         * @param {function} callback - The callback function to remove.
+         * @param frameID - the TF frame to unsubscribe from
+         * @param callback - the callback function to remove
          */
         TFClient.prototype.unsubscribe = function (frameID, callback) {
             // remove leading slash, if it's there
@@ -5197,7 +5164,7 @@
         mixin(Ros, ['TFClient'], tf);
     }, { "../core/Ros": 17, "../mixin": 29, "./TFClient": 30 }], 32: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5209,8 +5176,8 @@
          * A Box element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfBox(options) {
             this.dimension = null;
@@ -5226,10 +5193,9 @@
         }
 
         module.exports = UrdfBox;
-
     }, { "../math/Vector3": 27, "./UrdfTypes": 41 }], 33: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5238,8 +5204,8 @@
          * A Color element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfColor(options) {
             // Parse the xml string
@@ -5251,10 +5217,9 @@
         }
 
         module.exports = UrdfColor;
-
     }, {}], 34: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5265,8 +5230,8 @@
          * A Cylinder element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfCylinder(options) {
             this.type = UrdfTypes.URDF_CYLINDER;
@@ -5275,11 +5240,10 @@
         }
 
         module.exports = UrdfCylinder;
-
     }, { "./UrdfTypes": 41 }], 35: [function (require, module, exports) {
         /**
          * @fileOverview
-         * @author David V. Lu!! - davidvlu@gmail.com
+         * @author David V. Lu!!  davidvlu@gmail.com
          */
 
         var Pose = require('../math/Pose');
@@ -5290,8 +5254,8 @@
          * A Joint element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfJoint(options) {
             this.name = options.xml.getAttribute('name');
@@ -5371,7 +5335,7 @@
 
     }, { "../math/Pose": 24, "../math/Quaternion": 25, "../math/Vector3": 27 }], 36: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5382,8 +5346,8 @@
          * A Link element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfLink(options) {
             this.name = options.xml.getAttribute('name');
@@ -5398,10 +5362,9 @@
         }
 
         module.exports = UrdfLink;
-
     }, { "./UrdfVisual": 42 }], 37: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5412,8 +5375,8 @@
          * A Material element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfMaterial(options) {
             this.textureFilename = null;
@@ -5451,7 +5414,7 @@
 
     }, { "./UrdfColor": 33, "object-assign": 3 }], 38: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5463,8 +5426,8 @@
          * A Mesh element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfMesh(options) {
             this.scale = null;
@@ -5486,7 +5449,6 @@
         }
 
         module.exports = UrdfMesh;
-
     }, { "../math/Vector3": 27, "./UrdfTypes": 41 }], 39: [function (require, module, exports) {
         /**
          * @fileOverview
@@ -5506,9 +5468,9 @@
          * A URDF Model can be used to parse a given URDF into the appropriate elements.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
-         * @param {string} options.string - The XML element to parse as a string.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
+         *  * string - the XML element to parse as a string
          */
         function UrdfModel(options) {
             options = options || {};
@@ -5585,7 +5547,7 @@
 
     }, { "./UrdfJoint": 35, "./UrdfLink": 36, "./UrdfMaterial": 37, "@xmldom/xmldom": 45 }], 40: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5596,8 +5558,8 @@
          * A Sphere element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfSphere(options) {
             this.type = UrdfTypes.URDF_SPHERE;
@@ -5605,7 +5567,6 @@
         }
 
         module.exports = UrdfSphere;
-
     }, { "./UrdfTypes": 41 }], 41: [function (require, module, exports) {
         module.exports = {
             URDF_SPHERE: 0,
@@ -5616,7 +5577,7 @@
 
     }, {}], 42: [function (require, module, exports) {
         /**
-         * @fileOverview
+         * @fileOverview 
          * @author Benjamin Pitzer - ben.pitzer@gmail.com
          * @author Russell Toris - rctoris@wpi.edu
          */
@@ -5635,8 +5596,8 @@
          * A Visual element in a URDF.
          *
          * @constructor
-         * @param {Object} options
-         * @param {Element} options.xml - The XML element to parse.
+         * @param options - object with following keys:
+         *  * xml - the XML element to parse
          */
         function UrdfVisual(options) {
             var xml = options.xml;
@@ -5745,7 +5706,6 @@
         }
 
         module.exports = UrdfVisual;
-
     }, { "../math/Pose": 24, "../math/Quaternion": 25, "../math/Vector3": 27, "./UrdfBox": 32, "./UrdfCylinder": 34, "./UrdfMaterial": 37, "./UrdfMesh": 38, "./UrdfSphere": 40 }], 43: [function (require, module, exports) {
         module.exports = require('object-assign')({
             UrdfBox: require('./UrdfBox'),
@@ -5773,7 +5733,7 @@
         }
 
         /**
-         * Unpack 64-bit unsigned integer from byte array.
+         * Unpacks 64-bit unsigned integer from byte array.
          * @param {Uint8Array} bytes
         */
         function decodeUint64LE(bytes) {
@@ -5798,7 +5758,7 @@
         }
 
         /**
-         * Unpack 64-bit signed integer from byte array.
+         * Unpacks 64-bit signed integer from byte array.
          * @param {Uint8Array} bytes
         */
         function decodeInt64LE(bytes) {
@@ -5824,9 +5784,9 @@
         }
 
         /**
-         * Unpack typed array from byte array.
+         * Unpacks typed array from byte array.
          * @param {Uint8Array} bytes
-         * @param {type} ArrayType - Desired output array type
+         * @param {type} ArrayType - desired output array type
         */
         function decodeNativeArray(bytes, ArrayType) {
             var byteLen = bytes.byteLength;
@@ -5836,10 +5796,9 @@
         }
 
         /**
-         * Supports a subset of draft CBOR typed array tags:
-         *     <https://tools.ietf.org/html/draft-ietf-cbor-array-tags-00>
-         *
-         * Only supports little-endian tags for now.
+         * Support a subset of draft CBOR typed array tags:
+         *   <https://tools.ietf.org/html/draft-ietf-cbor-array-tags-00>
+         * Only support little-endian tags for now.
          */
         var nativeArrayTypes = {
             64: Uint8Array,
@@ -5861,7 +5820,7 @@
         };
 
         /**
-         * Handle CBOR typed array tags during decoding.
+         * Handles CBOR typed array tags during decoding.
          * @param {Uint8Array} data
          * @param {Number} tag
          */
@@ -5910,9 +5869,9 @@
          * "image" in a canvas element then decodes the * "image" as a Base64 string.
          *
          * @private
-         * @param data - An object containing the PNG data.
-         * @param callback - Function with the following params:
-         * @param callback.data - The uncompressed data.
+         * @param data - object containing the PNG data.
+         * @param callback - function with params:
+         *   * data - the uncompressed data
          */
         function decompressPng(data, callback) {
             // Uncompresses the data before sending it through (use image/canvas to do so).

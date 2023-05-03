@@ -19,6 +19,7 @@ class Teleoperation extends Component {
 
         this.state.ros.on("connection", () => {
             console.log("connection established from Teleoperation Component!");
+            console.log(this.state.ros);
             this.setState({ connected: true });
         });
 
@@ -102,7 +103,7 @@ class Teleoperation extends Component {
             <div>
                 <Joystick
                     size={100}
-                    sticky={true}
+                    sticky={false}
                     baseColor="#EEEEEE"
                     stickColor="#BBBBBB"
                     move={this.handleMove}

@@ -6,8 +6,7 @@ import Map from "./Map";
 import {
     Row,
     Col,
-    Container,
-    Button
+    Container
 } from "react-bootstrap";
 
 class Home extends Component {

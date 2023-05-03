@@ -2,8 +2,6 @@ import { Component } from "react";
 import {
     Row,
     Col,
-    Container,
-    Button
 } from "react-bootstrap";
 import Config from "../scripts/config";
 import * as Three from "three";
@@ -29,6 +27,7 @@ class RobotState extends Component {
 
         this.state.ros.on("connection", () => {
             console.log("connection established from RobotState Component!");
+            console.log(this.state.ros);
             this.setState({ connected: true });
         });
 
