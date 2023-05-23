@@ -1,22 +1,72 @@
 import React, { Component } from "react";
 import { Joystick } from "react-joystick-component";
+import config from "../scripts/config";
 
 class Teleoperation extends Component {
     state = { };
 
-    handleMove() {
-        console.log("Joystick move");
-        // ROS publisher topic cmd_vel
-        var cmd_vel = new window.ROSLIB.Topic({
-            ros: this.props.ros,
-        });
-        // create twist message
-
-        // publish twist message
+    constructor(props) {
+        super(props);
+        this.handleMove = this.handleMove.bind(this);
+        this.handleStop = this.handleStop.bind(this);
     }
 
-    handleStop() {
+    handleMove(event) {
+        console.log("Joystick move");
+        const { ros } = this.props;
+
+        // ROS publisher topic cmd_vel
+        var cmd_vel = new window.ROSLIB.Topic({
+            ros: ros,
+            name: config.topicName,
+            messageType: config.messageType,
+        });
+
+        // create twist message
+        var twist = new window.ROSLIB.Message({
+            linear: {
+                x: event.y / 5,
+                y: 0,
+                z: 0,
+            },
+            angular: {
+                x: 0,
+                y: 0,
+                z: -event.x / 5,
+            },
+        });
+
+        // publish twist message
+        cmd_vel.publish(twist);
+    }
+
+    handleStop(event) {
         console.log("Joystick stop");
+        const { ros } = this.props;
+
+        // ROS publisher topic cmd_vel
+        var cmd_vel = new window.ROSLIB.Topic({
+            ros: ros,
+            name: config.topicName,
+            messageType: config.messageType,
+        });
+
+        // create twist message
+        var twist = new window.ROSLIB.Message({
+            linear: {
+                x: 0,
+                y: 0,
+                z: 0,
+            },
+            angular: {
+                x: 0,
+                y: 0,
+                z: 0,
+            },
+        });
+
+        // publish twist message
+        cmd_vel.publish(twist);
     }
 
     render() {
@@ -25,7 +75,7 @@ class Teleoperation extends Component {
             <div>
                 {ros && (
                     <>
-                    <h3>Controller</h3>
+                    <h4>Controller</h4>
                     <Joystick
                         size={100} 
                         sticky={false}

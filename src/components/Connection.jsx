@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Alert } from "react-bootstrap";
 import config from "../scripts/config";
 import Teleoperation from "./Teleoperation";
+import RobotState from "./RobotState";
 
 class Connection extends Component {
     state = {
@@ -66,6 +67,7 @@ class Connection extends Component {
                     {connecting ? "Connecting..." : (connected ? "Robot Connected" : "Robot Disconnected")}
                 </Alert>
                 <Teleoperation ros={ros} />
+                <RobotState ros={ros} />
             </div >
         );
     }

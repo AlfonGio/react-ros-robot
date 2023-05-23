@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Connection from "./Connection";
 import Teleoperation from "./Teleoperation";
+import RobotState from "./RobotState";
 import { Row, Col, Container, Button } from "react-bootstrap";
 
 class Home extends Component {
@@ -23,8 +24,13 @@ class Home extends Component {
                             <Teleoperation />
                         </Col>
                         <Col>
-                            <h2>Map</h2>
+                            <h4>Map</h4>
                             <p>This region will be used to display map</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <RobotState />
                         </Col>
                     </Row>
                 </Container>
