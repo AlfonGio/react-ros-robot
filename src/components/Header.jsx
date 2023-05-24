@@ -7,7 +7,7 @@ class Header extends Component {
         return (
             <Container>
                 <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-                    <Navbar.Brand href="/#home">React ROS Robot</Navbar.Brand>
+                    <Navbar.Brand href="/#home">Robot Web Interface</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">

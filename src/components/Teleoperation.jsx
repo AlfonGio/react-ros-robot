@@ -25,14 +25,14 @@ class Teleoperation extends Component {
         // create twist message
         var twist = new window.ROSLIB.Message({
             linear: {
-                x: event.y / 5,
+                x: event.y / 2,
                 y: 0,
                 z: 0,
             },
             angular: {
                 x: 0,
                 y: 0,
-                z: -event.x / 5,
+                z: -event.x / 2,
             },
         });
 

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Alert } from "react-bootstrap";
+import { Alert, Row, Col } from "react-bootstrap";
 import config from "../scripts/config";
 import Teleoperation from "./Teleoperation";
 import RobotState from "./RobotState";
+import Map from "./Map";
 
 class Connection extends Component {
     state = {
@@ -66,8 +67,20 @@ class Connection extends Component {
                     variant={connected ? "success" : "danger"}>
                     {connecting ? "Connecting..." : (connected ? "Robot Connected" : "Robot Disconnected")}
                 </Alert>
-                <Teleoperation ros={ros} />
-                <RobotState ros={ros} />
+                <Row>
+                    <Col>
+                        <Teleoperation ros={ros} />
+                    </Col>
+                    <Col>
+                        <h4>Map</h4>
+                        <Map ros={ros} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <RobotState ros={ros} />
+                    </Col>
+                </Row>
             </div >
         );
     }

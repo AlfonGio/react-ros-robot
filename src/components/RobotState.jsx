@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import config from "../scripts/config";
+import * as Three from "three";
 
 class RobotState extends Component {
     state = {
@@ -19,9 +20,10 @@ class RobotState extends Component {
     }
 
     getRobotState(ros) {
-        console.log("Getting robot pose...");
+        console.log(ros);
 
         // create pose subscriber
+        console.log("Getting robot pose...");
         var pose_subscriber = new window.ROSLIB.Topic({
             ros: ros,
             name: config.topicRobotPose,
@@ -33,8 +35,41 @@ class RobotState extends Component {
             this.setState({
                 x: message.pose.pose.position.x.toFixed(2),
                 y: message.pose.pose.position.y.toFixed(2),
+                orientation: this.getOrientationFromQuaternion(
+                    message.pose.pose.orientation
+                ).toFixed(2),
             });
         });
+
+        // create velocity subscriber
+        console.log("Getting robot velocity...");
+        var velocity_subscriber = new window.ROSLIB.Topic({
+            ros: ros,
+            name: config.topicRobotVel,
+            messageType: config.messageTypeVel,
+        });
+
+        // create velocity callback
+        velocity_subscriber.subscribe((message) => {
+            this.setState({
+                linear_velocity: message.twist.twist.linear.x.toFixed(2),
+                angular_velocity: message.twist.twist.angular.z.toFixed(2),
+            });
+        });
+    }
+
+    getOrientationFromQuaternion(ros_orientation_quaternion) {
+        var q = new Three.Quaternion(
+            ros_orientation_quaternion.x,
+            ros_orientation_quaternion.y,
+            ros_orientation_quaternion.z,
+            ros_orientation_quaternion.w,
+        );
+
+        // convert quaternion into Roll, Pitch, and Yaw
+        var RPY = new Three.Euler().setFromQuaternion(q);
+
+        return RPY["_z"] * (180 / Math.PI);
     }
 
     render() {
