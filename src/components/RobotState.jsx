@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import config from "../scripts/config";
 import * as Three from "three";
 
@@ -25,7 +25,7 @@ class RobotState extends Component {
         // create pose subscriber
         console.log("Getting robot pose...");
         var pose_subscriber = new window.ROSLIB.Topic({
-            ros: ros,
+            ros: this.props.ros,
             name: config.topicRobotPose,
             messageType: config.messageTypePose,
         });
@@ -44,7 +44,7 @@ class RobotState extends Component {
         // create velocity subscriber
         console.log("Getting robot velocity...");
         var velocity_subscriber = new window.ROSLIB.Topic({
-            ros: ros,
+            ros: this.props.ros,
             name: config.topicRobotVel,
             messageType: config.messageTypeVel,
         });

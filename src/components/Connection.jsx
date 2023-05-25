@@ -69,16 +69,16 @@ class Connection extends Component {
                 </Alert>
                 <Row>
                     <Col>
-                        <Teleoperation ros={ros} />
+                        {ros && <Teleoperation ros={ros} />}
                     </Col>
                     <Col>
                         <h4>Map</h4>
-                        <Map ros={ros} />
+                        {ros && <Map ros={ros} />}
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <RobotState ros={ros} />
+                        {ros && <RobotState ros={ros} />}
                     </Col>
                 </Row>
             </div >

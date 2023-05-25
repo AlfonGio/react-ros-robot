@@ -1101,7 +1101,8 @@ var ROS2D = ROS2D || {
     document.getElementById(divID).appendChild(canvas);
   
     // update at 30fps
-    createjs.Ticker.setFPS(30);
+    // createjs.Ticker.setFPS(30);
+    createjs.Ticker.framerate = 30;
     createjs.Ticker.addEventListener('tick', this.scene);
   };
   
